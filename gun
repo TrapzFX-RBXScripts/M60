@@ -1,0 +1,256 @@
+mas = owner.Backpack
+Tool0 = Instance.new("Tool")
+Part1 = Instance.new("Part")
+SpecialMesh2 = Instance.new("SpecialMesh")
+Part3 = Instance.new("Part")
+Weld4 = Instance.new("Weld")
+Weld5 = Instance.new("Weld")
+Part6 = Instance.new("Part")
+Tool0.Name = "M60"
+Tool0.Parent = mas
+Part1.Name = "gun"
+Part1.Parent = Tool0
+Part1.CFrame = CFrame.new(91.4317932, 51011.7656, 50.96558, -1, 0, 0, 0, 0, -0.999999881, 0, -1, 0)
+Part1.Orientation = Vector3.new(89.970001220703, 0, 0)
+Part1.Position = Vector3.new(91.431793212891, 51011.765625, 50.965579986572)
+Part1.Rotation = Vector3.new(90, 0, -180)
+Part1.Size = Vector3.new(0.62300002574921, 1.0089999437332, 5.3090000152588)
+Part1.BottomSurface = Enum.SurfaceType.Smooth
+Part1.Material = Enum.Material.Metal
+Part1.TopSurface = Enum.SurfaceType.Smooth
+Part1.CanCollide = false
+Part1.Massless = true
+SpecialMesh2.Parent = Part1
+SpecialMesh2.MeshId = "rbxassetid://467359376"
+SpecialMesh2.Scale = Vector3.new(0.0099999997764826, 0.0099999997764826, 0.012000000104308)
+SpecialMesh2.TextureId = "rbxassetid://467359400"
+SpecialMesh2.MeshType = Enum.MeshType.FileMesh
+Part3.Name = "cast"
+Part3.Parent = Tool0
+Part3.CFrame = CFrame.new(91.5650482, 51009.1758, 50.9012756, -1, 0, 0, 0, 0, -0.999999642, 0, -1, 0)
+Part3.Orientation = Vector3.new(89.949996948242, 0, 0)
+Part3.Position = Vector3.new(91.565048217773, 51009.17578125, 50.901275634766)
+Part3.Rotation = Vector3.new(90, 0, -180)
+Part3.Size = Vector3.new(0.0010000000474975, 0.0010000467300415, 0.0010000000474975)
+Part3.BottomSurface = Enum.SurfaceType.Smooth
+Part3.Material = Enum.Material.Metal
+Part3.TopSurface = Enum.SurfaceType.Smooth
+Weld4.Name = "gun"
+Weld4.Parent = Part3
+Weld4.C0 = CFrame.new(0.133255005, -0.0643043518, -2.58984375, 1, 0, 0, 0, 1, 0, 0, 0, 0.999999762)
+Weld4.Part0 = Part3
+Weld4.Part1 = Part1
+Weld4.part1 = Part1
+Weld5.Name = "Handle"
+Weld5.Parent = Part3
+Weld5.C0 = CFrame.new(0, -0.369083405, -3.59375, -1, -0, 0, 0, 1, 4.37113883e-08, 0, 4.37113741e-08, -0.999999642)
+Weld5.Part0 = Part3
+Weld5.Part1 = Part6
+Weld5.part1 = Part6
+Part6.Name = "Handle"
+Part6.Parent = Tool0
+Part6.CFrame = CFrame.new(91.5650482, 51012.7695, 51.270359, 1, 0, 0, 0, -4.37113599e-08, 0.999999285, 0, -1, -4.37113883e-08)
+Part6.Orientation = Vector3.new(-89.930000305176, 180, 180)
+Part6.Position = Vector3.new(91.565048217773, 51012.76953125, 51.270359039307)
+Part6.Rotation = Vector3.new(-90, 0, 0)
+Part6.Size = Vector3.new(0.0010000000474975, 0.0010000467300415, 0.0010000000474975)
+Part6.BottomSurface = Enum.SurfaceType.Smooth
+Part6.Material = Enum.Material.Metal
+Part6.TopSurface = Enum.SurfaceType.Smooth
+
+--animating
+
+local defaults = {
+	LeftHip = owner.Character.Torso["Left Hip"].C0,
+	RightHip = owner.Character.Torso["Right Hip"].C0,
+	LeftShoulder = owner.Character.Torso["Left Shoulder"].C0,
+	RightShoulder = owner.Character.Torso["Right Shoulder"].C0,
+	Neck = owner.Character.Torso["Neck"].C0,
+	RootJoint = owner.Character.HumanoidRootPart["RootJoint"].C0
+}
+
+local current = "Idle"
+
+local equipped2 = false
+
+spawn(function()
+	while equipped2 do
+		wait(0.005)
+		if current == "Idle" then
+			local weld4 = owner.Character.Torso["Right Shoulder"]
+			weld4.C0 = defaults.RightShoulder*CFrame.new(0.09, 0, 0) * CFrame.Angles(0, 0, math.rad(94.996))
+			local weld3 = owner.Character.Torso["Left Shoulder"]
+			weld3.C0 = defaults.LeftShoulder*CFrame.new(-1.13, -0.445, -1.34) * CFrame.Angles(math.rad(-4.183), math.rad(-39.821), math.rad(-111.555))
+		end
+	end
+end)
+
+
+--beam, anim start, anim end funcs
+
+Tool0.Equipped:Connect(function()
+	equipped2 = true
+end)
+
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+
+local event = Instance.new("RemoteEvent",game.ReplicatedStorage)
+event.Name = "ShotEvent"
+
+local remoteEvent = ReplicatedStorage:WaitForChild('ShotEvent')
+
+NLS([[
+local gun = script.Parent
+
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+
+local remoteEvent = ReplicatedStorage:WaitForChild('ShotEvent')
+
+
+
+local shooting = false
+
+local equipped = false
+
+
+
+local player = game.Players.LocalPlayer
+
+local mouse = player:GetMouse()
+
+
+
+local mouseConnection
+
+
+
+gun.Parent.Equipped:Connect(function()
+
+	equipped = true
+
+	mouseConnection = mouse.Button1Down:Connect(function()
+
+		shooting = true
+
+		while shooting and equipped do
+
+			remoteEvent:FireServer(gun.Parent.cast.Position, gun.Parent.cast.Orientation, mouse.Hit.p)
+
+			mouse.Button1Up:Connect(function()
+
+				shooting = false
+
+			end)
+
+			wait(0.1)
+
+		end
+
+	end)
+
+end)
+
+gun.Parent.Unequipped:Connect(function()
+
+	equipped = false
+
+	mouseConnection:Disconnect()
+
+end)
+]],Part1)
+
+
+local gun_shot = Instance.new("Sound", Part1)
+gun_shot.SoundId = "rbxassetid://803502003"
+
+
+
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+
+local remoteEvent = ReplicatedStorage:WaitForChild('ShotEvent')
+
+
+
+local damage_amount = 8
+
+
+
+remoteEvent.OnServerEvent:Connect(function(player, gunPos, gunOr, mosPos)
+
+	gun_shot:Play()
+
+	local bullet = Instance.new('Part')
+
+	bullet.Name = 'Bullet'
+
+	bullet.CanCollide = true
+
+	bullet.Material = Enum.Material.Neon
+
+	bullet.Parent = game.Workspace
+
+	bullet.Shape = Enum.PartType.Cylinder
+
+	bullet.Size = Vector3.new(0.45, 2.45, 0.45)
+
+	bullet.BrickColor = BrickColor.new('Institutional white')
+
+	local Att1 = Instance.new("Attachment")
+	Att1.Parent = bullet
+    Att1.Position = Vector3.new(0, 0.129, 0)
+	local Att2 = Instance.new("Attachment")
+	Att2.Parent = bullet
+    Att2.Position = Vector3.new(0, -0.129, 0)
+	local Trail0 = Instance.new("Trail")
+	Trail0.Parent = bullet
+	Trail0.Attachment0 = Att1
+	Trail0.Attachment1 = Att2
+	Trail0.FaceCamera = true
+	Trail0.LightEmission = 1
+	Trail0.LightInfluence = 1
+	Trail0.Transparency = NumberSequence.new(0.5,1)
+	Trail0.MinLength = 0.0010000000474975
+	Trail0.WidthScale = NumberSequence.new(1,0)
+
+
+
+	local speed = 250
+
+	bullet.CFrame = CFrame.new(gunPos, mosPos)
+
+	bullet.Velocity = bullet.CFrame.lookVector * speed
+
+
+
+	bullet.Touched:Connect(function(otherPart)
+
+		local humanoid = otherPart.Parent:FindFirstChild('Humanoid')
+
+		if humanoid and humanoid.Parent.Name ~= player.Name then
+
+			if humanoid.Health > 0 and humanoid.Health - damage_amount <= 0 then
+
+
+			end
+
+			humanoid:TakeDamage(damage_amount)
+
+			bullet:Destroy()
+
+		end
+
+	end)
+
+
+
+	game:GetService('Debris'):AddItem(bullet, 1)
+
+end)
+
+Tool0.Unequipped:Connect(function()
+	local weld4 = owner.Character.Torso["Right Shoulder"]
+	weld4.C0 = defaults.RightShoulder*CFrame.Angles(0, 0, 0)
+	local weld3 = owner.Character.Torso["Left Shoulder"]
+	weld3.C0 = defaults.LeftShoulder*CFrame.new(0,0,0) * CFrame.Angles(0, 0, 0)
+	equipped2 = false
+end)
